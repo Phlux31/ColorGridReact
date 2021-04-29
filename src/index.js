@@ -1,17 +1,46 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+class Container extends React.Component {
+    render() {
+        var divs = [];
+        for (var i = 0; i < 200; i++) {
+            divs.push(<ColorBox key={i} />);
+        }
+        return <div className="container">{divs}</div>;
+    }
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+class ColorBox extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            boxBackground: "rgb(85, 84, 84)"
+        }
+    }
+
+    changeColor = () => {
+        var r = Math.floor(Math.random()*255);
+        var g = Math.floor(Math.random()*255);
+        var b = Math.floor(Math.random()*255);
+        this.setState({
+            boxBackground: "rgb(" + r + "," + g + "," + b + ")"
+        });
+    }
+
+    render() {
+      return (
+            <div className="colorbox" style={{
+                    background: this.state.boxBackground
+                }}
+                onMouseEnter={this.changeColor} />
+      );
+    }
+  }
+
+  ReactDOM.render(
+    <Container />,
+    document.getElementById('root')
+  );
